@@ -1,0 +1,16 @@
+@use '/src/f-shared/scss-var/colors' as colors;
+
+.header_user{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 30%;
+}
+
+.user__left_side{
+ color: colors.$header-text-color;
+}
+
+.user__right_side{
+    display: flex;
+}
