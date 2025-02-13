@@ -15,6 +15,7 @@ const authData = {login: 'testdemo', password: 'demo'}
 export default function useGetTestTaskData() {
     const [coordinates, setCoordinates] = useState([])
     const [reserves, setReserves] = useState([])
+    const [mapCenter, setMapCenter] = useState([55.751694,37.617218])
     const [error, setError] = useState(null)
     const [needLoad, setNeedLoad] = useState(true)
 
@@ -28,7 +29,6 @@ export default function useGetTestTaskData() {
             .then(data => {
                     dispatch(setToken(data.token))
                     dispatch(setRefreshToken(data.refresh_token))
-                    console.log(token)
                             }
                 )
             .catch(error => 'Error in hook useGetTestTaskData')
@@ -46,14 +46,14 @@ export default function useGetTestTaskData() {
                 return;
             }
 
-            const { coordinates, reserves } = event.data;
+            const { coordinates, reserves, center } = event.data;
             setCoordinates(coordinates);
             setReserves(reserves);
+            setMapCenter(center);
         };
 
         postData(getRoutesPoint, token, mockdata)
         .then(data => {
-            console.log(`data ${data[740][0].route}`)
             worker.postMessage({ response: data });
         })
         .catch(error => {
@@ -66,5 +66,5 @@ export default function useGetTestTaskData() {
 
 }, [token, needLoad]);
     
-  return {coordinates, reserves, setNeedLoad}
+  return {coordinates, reserves, mapCenter, setNeedLoad}
 }
