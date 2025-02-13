@@ -2,7 +2,7 @@ import { MapContainer,Polyline, TileLayer, useMap} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from './map.module.scss'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect} from 'react'
 
 function MapView({ center }) {
     const map = useMap();

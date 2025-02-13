@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+# TEST-SM-EX
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Описание задания
 
-## Available Scripts
+Цель задания — реализовать компонент взаимодействия с графиком и картой, используя данные из API. Компонент должен отобразить маршрут на карте, а также построить график с возможностью выбора отображаемых параметров. Когда пользователь кликает на точку графика, карта должна центрироваться на соответствующей точке маршрута и отобразить метку.
 
-In the project directory, you can run:
+## Порядок выполнения
 
-### `npm start`
+1. **Получить токен:**
+   - **API для получения токена:** `https://sputnic.tech/mobile_api/token/login`
+   - **Метод:** `POST`
+   - **Учетные данные:**
+    ```json
+     {
+        "login": "testdemo",
+        "password": "demo"
+     }
+     ```
+   - В ответе придут два токена: `access` и `refresh`.
+   - Используйте токен `access` в последующих запросах, добавляя его в заголовок как `Bearer Token`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **Получить данные для графика:**
+   - **API для получения данных маршрута:** `https://sputnic.tech/mobile_api/getRoutesPoint`
+   - **Метод:** `POST`
+   - **Тело запроса:**
+     ```json
+     {
+       "id": 740,
+       "date_start": "2025-02-05 06:13:02",
+       "date_end": "2025-02-07 17:53:24"
+     }
+     ```
+   - В ответе вы получите набор данных с объектами: `parking`, `refuels`, `route`.
+     - **Объект `route`** включает:
+       - `lat` — широта
+       - `lng` — долгота
+       - `reserve` — данные с трекера и датчиков для построения графика.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Ожидаемое поведение
 
-### `npm test`
+1. **Карта:**
+   - После получения данных должен отобразиться маршрут на карте.
+   - Для отображения маршрута можно использовать любую карту, например, **Google Maps**, **Яндекс.Карты** или **OpenStreetMap**.
+   - На карте отобразите линию маршрута, проложенную по точкам, полученным из данных `route` (широта и долгота).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **График:**
+   - Снизу должен отображаться график с данными из объекта `reserve`:
+     - Параметры, которые следует отобразить на графике:
+       - `speed` — скорость
+       - `fuel1` — уровень топлива
+       - `voltage` — напряжение
+   - Для отображения графиков используйте библиотеки, такие как **Chart.js**
+   - График должен поддерживать чекбоксы для включения/отключения параметров.
 
-### `npm run build`
+3. **Взаимодействие с графиком:**
+   - Когда пользователь нажимает на точку графика, карта должна автоматически центрироваться на соответствующей точке маршрута и показывать метку на этом месте.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Реализация
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Требования:
+- Использовать React.
+- Реализовать взаимодействие с API.
+- Использовать компонент карты и графика.
+- Обрабатывать данные с API и отображать маршрут и график.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { getLogin, getRoutesPoint } from '../end-api/end-api';
 import { getData, postData } from '../fetch-methods/get-data';
@@ -20,7 +20,6 @@ export default function useGetTestTaskData() {
     const [needLoad, setNeedLoad] = useState(true)
 
     const token = useSelector((state) => state.tokens.token);
-    const refresh_token = useSelector((state)=> state.tokens.refresh_token)
     const dispatch = useDispatch();
 
     useEffect(()=>{
