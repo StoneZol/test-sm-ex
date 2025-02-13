@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
@@ -12,7 +12,10 @@ ChartJS.register(
   Legend
 );
 
-const Graph = ({ data }) => {
+const Graph = ({ data, onPointClick }) => {
+
+  const chartRef = useRef(null);
+
   const chartData = {
     labels: data.map((_, index) => index),
     datasets: [
@@ -45,6 +48,14 @@ const Graph = ({ data }) => {
   const options = {
     responsive: true,
     animation: false,
+    onClick: (event) => {
+      if (!chartRef.current) return;
+      const chart = chartRef.current;
+      const points = chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
+      if (points.length > 0) {
+        const index = points[0].index;
+        onPointClick(index); // Передаем индекс в родительский компонент
+      }},
     scales: {
       x: {
         title: {
@@ -73,7 +84,7 @@ const Graph = ({ data }) => {
 
   return (
     <div style={{ width: '50%', margin: 'auto' }}>
-      <Line data={chartData} options={options}/>
+      <Line ref={chartRef} data={chartData} options={options}/>
     </div>
   );
 };

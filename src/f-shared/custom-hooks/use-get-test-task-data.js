@@ -65,5 +65,5 @@ export default function useGetTestTaskData() {
 
 }, [token, needLoad]);
     
-  return {coordinates, reserves, mapCenter, setNeedLoad}
+  return {coordinates, reserves, mapCenter, setNeedLoad, setMapCenter}
 }
